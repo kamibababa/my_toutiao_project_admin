@@ -47,6 +47,9 @@ export default {
 
 .aside {
   background-color: #d3dce6;
+  .aside-menu {
+    height: 100%;
+  }
 }
 
 .header {
