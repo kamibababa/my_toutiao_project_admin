@@ -22,7 +22,7 @@
           >
         </el-form-item>
         <el-form-item>
-          <el-button class="login-btn" type="primary" @click="onSubmit"
+          <el-button class="login-btn" type="primary" @click="onLogin"
             >登录</el-button
           >
         </el-form-item>
@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import request from '@/utils/request'
+
 export default {
   name: 'LoginIndex',
   components: {},
@@ -49,7 +51,29 @@ export default {
   watch: {},
   created () {},
   mounted () {},
-  methods: {}
+  methods: {
+    onLogin () {
+      // 获取表单数据（根据接口要求绑定数据）
+      const user = this.user
+
+      // 表单验证
+
+      // 验证通过，提交登录
+      request({
+        method: 'POST',
+        url: '/mp/v1_0/authorizations',
+        // data 用来设置 POST 请求体
+        data: user
+      }).then(res => {
+        console.log(res)
+
+        // 登录成功
+      }).catch(err => {
+        console.log('登录失败', err)
+        // 登录失败
+      })
+    }
+  }
 }
 </script>
 
