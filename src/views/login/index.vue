@@ -59,7 +59,7 @@ export default {
         ],
         agree: [
           {
-            // 自定义校验规则：https://element.eleme.cn/#/zh-CN/component/form#zi-ding-yi-xiao-yan-gui-ze
+            // 自定义校验a规则：https://element.eleme.cn/#/zh-CN/component/form#zi-ding-yi-xiao-yan-gui-ze
             // 验证通过：callback()
             // 验证失败：callback(new Error('错误消息'))
             validator: (rule, value, callback) => {
