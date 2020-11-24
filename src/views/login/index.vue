@@ -22,7 +22,7 @@
           >
         </el-form-item>
         <el-form-item>
-          <el-button class="login-btn" type="primary" @click="onLogin"
+          <el-button class="login-btn" type="primary" @click="onLogin" :loading="loginLoading"
             >登录</el-button
           >
         </el-form-item>
@@ -44,7 +44,8 @@ export default {
         mobile: '',
         code: ''
       },
-      checked: false
+      checked: false,
+      loginLoading: false
     }
   },
   computed: {},
@@ -58,6 +59,8 @@ export default {
 
       // 表单验证
 
+      this.loginLoading = true
+
       // 验证通过，提交登录
       request({
         method: 'POST',
@@ -68,9 +71,18 @@ export default {
         console.log(res)
 
         // 登录成功
+        this.$message({
+          message: '登录成功',
+          type: 'success'
+        })
+
+        this.loginLoading = false
       }).catch(err => {
         console.log('登录失败', err)
         // 登录失败
+        this.$message.error('登录失败，手机号或验证码错误')
+
+        this.loginLoading = false
       })
     }
   }
