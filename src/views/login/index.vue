@@ -16,8 +16,8 @@
         <el-form-item prop="code">
           <el-input v-model="user.code" placeholder="请输入验证码"></el-input>
         </el-form-item>
-        <el-form-item>
-          <el-checkbox v-model="checked"
+        <el-form-item prop="agree">
+          <el-checkbox v-model="user.agree"
             >我已阅读并同意用户协议和隐私条款</el-checkbox
           >
         </el-form-item>
@@ -42,9 +42,10 @@ export default {
     return {
       user: {
         mobile: '',
-        code: ''
+        code: '',
+        agree: false
       },
-      checked: false,
+      // checked: false,
       loginLoading: false,
       formRules: { // 表单验证规则配置
         // 要验证的数据名称：规则列表[]
@@ -55,6 +56,22 @@ export default {
         code: [
           { required: true, message: '验证码不能为空', trigger: 'change' },
           { pattern: /^\d{6}$/, message: '请输入正确的验证码格式' }
+        ],
+        agree: [
+          {
+            // 自定义校验规则：https://element.eleme.cn/#/zh-CN/component/form#zi-ding-yi-xiao-yan-gui-ze
+            // 验证通过：callback()
+            // 验证失败：callback(new Error('错误消息'))
+            validator: (rule, value, callback) => {
+              if (value) {
+                callback()
+              } else {
+                callback(new Error('请同意用户协议'))
+              }
+            },
+            // message: '请勾选同意用户协议',
+            trigger: 'change'
+          }
         ]
       }
     }
