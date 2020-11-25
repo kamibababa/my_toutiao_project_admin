@@ -6,8 +6,8 @@
     </div>
     <el-dropdown>
       <div class="avatar-wrap">
-        <img class="avatar" src="http://toutiao-img.itheima.net/FuyELvGh8jbise6dfoEr0W7luPLq" alt="">
-        <span>张三</span>
+        <img class="avatar" :src="user.photo" alt="">
+        <span>{{user.name}}</span>
         <i class="el-icon-arrow-down el-icon--right"></i>
       </div>
       <el-dropdown-menu slot="dropdown">
@@ -19,18 +19,30 @@
 </template>
 
 <script>
+import { getUserProfile } from '@/api/user'
+
 export default {
   name: 'AppHeader',
   components: {},
   props: {},
   data () {
-    return {}
+    return {
+      user: {}
+    }
   },
   computed: {},
   watch: {},
-  created () {},
+  created () {
+    this.loadUserProfile()
+  },
   mounted () {},
-  methods: {}
+  methods: {
+    loadUserProfile () {
+      getUserProfile().then(res => {
+        this.user = res.data.data
+      })
+    }
+  }
 }
 </script>
 

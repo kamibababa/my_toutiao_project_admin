@@ -112,6 +112,10 @@ export default {
         })
 
         this.loginLoading = false
+
+        console.log(res.data.data)
+
+        window.localStorage.setItem('user', JSON.stringify(res.data.data))
       }).catch(err => {
         console.log('登录失败', err)
         // 登录失败
