@@ -44,7 +44,11 @@
           </el-date-picker>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="loadArticles(1)">查询</el-button>
+          <el-button
+            type="primary"
+            :disabled="loading"
+            @click="loadArticles(1)"
+          >查询</el-button>
         </el-form-item>
       </el-form>
       <!-- /数据筛选表单 -->
@@ -61,6 +65,7 @@
         style="width: 100%"
         class="list-table"
         size="mini"
+        v-loading="loading"
       >
         <el-table-column
           prop="date"
@@ -113,6 +118,7 @@
         background
         :total="totalCount"
         :page-size="pageSize"
+        :disabled="loading"
         @current-change="onCurrentChange">
       </el-pagination>
       <!-- /列表分页 -->
@@ -137,6 +143,7 @@ export default {
       channels: [],
       channelId: null,
       rangeDate: null,
+      loading: true,
       articleStatus: [
         { status: 0, text: '草稿', type: 'info' }, // 0
         { status: 1, text: '待审核', type: '' }, // 1
@@ -155,6 +162,8 @@ export default {
   mounted () {},
   methods: {
     loadArticles (page = 1) {
+      this.loading = true
+
       getArticles({
         page,
         per_page: this.pageSize,
@@ -163,6 +172,7 @@ export default {
         begin_pubdate: this.rangeDate ? this.rangeDate[0] : null, // 开始日期
         end_pubdate: this.rangeDate ? this.rangeDate[1] : null // 截止日期
       }).then(res => {
+        this.loading = false
         const { results, total_count: totalCount } = res.data.data
         this.articles = results
         this.totalCount = totalCount
