@@ -42,22 +42,14 @@
             fit="cover"
           ></el-image>
           <div class="image-action">
-            <!-- <i class="el-icon-star-on"></i> -->
-            <!--
-              class 样式绑定
-               {
-                  CSS类名: 布尔值
-               }
-               true：作用类名
-               false：不作用类名
-             -->
-            <i
-              :class="{
-                'el-icon-star-on': img.is_collected,
-                'el-icon-star-off': !img.is_collected
-              }"
+            <el-button
+              type="warning"
+              :icon="img.is_collected ? 'el-icon-star-on' : 'el-icon-star-off'"
+              circle
+              size="small"
               @click="onCollect(img)"
-            ></i>
+              :loading="img.loading"
+            ></el-button>
             <i class="el-icon-delete-solid"></i>
           </div>
         </el-col>
@@ -141,7 +133,11 @@ export default {
         page,
         per_page: this.pageSize
       }).then(res => {
-        this.images = res.data.data.results
+        const results = res.data.data.results
+        results.forEach(img => {
+          img.loading = false
+        })
+        this.images = results
         this.totalCount = res.data.data.total_count
       })
     },
@@ -158,8 +154,10 @@ export default {
       this.loadImages(page)
     },
     onCollect (img) {
+      img.loading = true
       collectImage(img.id, !img.is_collected).then(res => {
         img.is_collected = !img.is_collected
+        img.loading = false
       })
     }
   }
