@@ -50,7 +50,14 @@
               @click="onCollect(img)"
               :loading="img.loading"
             ></el-button>
-            <i class="el-icon-delete-solid"></i>
+            <el-button
+              size="small"
+              type="danger"
+              icon="el-icon-delete-solid"
+              circle
+              :loading="img.loading"
+              @click="onDelete(img)"
+            ></el-button>
           </div>
         </el-col>
       </el-row>
@@ -100,7 +107,7 @@
 </template>
 
 <script>
-import { getImages, collectImage } from '@/api/image'
+import { getImages, collectImage, deleteImage } from '@/api/image'
 
 export default {
   name: 'ImageIndex',
@@ -157,6 +164,14 @@ export default {
       img.loading = true
       collectImage(img.id, !img.is_collected).then(res => {
         img.is_collected = !img.is_collected
+        img.loading = false
+      })
+    },
+    onDelete (img) {
+      img.loading = true
+      deleteImage(img.id).then(res => {
+        // 重新加载数据列表
+        this.loadImages(this.page)
         img.loading = false
       })
     }
