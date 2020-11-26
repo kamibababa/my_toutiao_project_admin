@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { getArticleChannels, addArticle } from '@/api/article'
+import { getArticleChannels, addArticle, getArticle } from '@/api/article'
 
 export default {
   name: 'PublishIndex',
@@ -68,9 +68,21 @@ export default {
   watch: {},
   created () {
     this.loadChannels()
+    // 由于我们让发布和修改使用的同一个组件
+    // 所以这里要判断
+    // 如果路由路径参数中有 id，则请求展示文章内容
+    if (this.$route.query.id) {
+      this.loadArticle()
+    }
   },
   mounted () {},
   methods: {
+    loadArticle () {
+      getArticle(this.$route.query.id).then(res => {
+        // 模板绑定展示
+        this.article = res.data.data
+      })
+    },
     loadChannels () {
       getArticleChannels().then(res => {
         this.channels = res.data.data.channels
