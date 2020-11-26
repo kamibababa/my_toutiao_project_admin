@@ -14,7 +14,7 @@
         <el-radio-group
          v-model="collect"
          size="mini"
-         @change="onCollectChange"
+         @change="loadImages(1)"
         >
           <el-radio-button :label="false">全部</el-radio-button>
           <el-radio-button :label="true">收藏</el-radio-button>
@@ -47,6 +47,20 @@
           </div>
         </el-col>
       </el-row>
+      <!-- 数据分页 -->
+      <!--
+        分页数据改变以后，页码不会变化
+        它需要单独处理高亮的页码
+       -->
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="totalCount"
+        :page-size="pageSize"
+        :current-page.sync="page"
+        @current-change="onPageChange"
+      >
+      </el-pagination>
       <!-- /素材列表 -->
     </el-card>
     <el-dialog
@@ -93,30 +107,40 @@ export default {
       dialogUploadVisible: false,
       uploadHeaders: {
         Authorization: `Bearer ${user.token}`
-      }
+      },
+      totalCount: 0, // 总数据条数
+      pageSize: 5, // 每页大小
+      page: 1 // 当前页码
     }
   },
   computed: {},
   watch: {},
   created () {
-    this.loadImages(false)
+    this.loadImages(1)
   },
   mounted () {},
   methods: {
-    loadImages (collect = false) {
+    loadImages (page = 1) {
       getImages({
-        collect
+        collect: this.collect,
+        page,
+        per_page: this.pageSize
       }).then(res => {
         this.images = res.data.data.results
+        this.totalCount = res.data.data.total_count
       })
-    },
-    onCollectChange (value) {
-      this.loadImages(value)
     },
     onUploadSuccess () {
       this.dialogUploadVisible = false
 
-      this.loadImages(false)
+      this.loadImages(this.page)
+      this.$message({
+        type: 'success',
+        message: '上传成功'
+      })
+    },
+    onPageChange (page) {
+      this.loadImages(page)
     }
   }
 }
