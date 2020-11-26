@@ -29,6 +29,12 @@
             <el-radio :label="0">无图</el-radio>
             <el-radio :label="-1">自动</el-radio>
           </el-radio-group>
+          <template v-if="article.cover.type > 0">
+            <upload-cover
+              :key="cover"
+              v-for="cover in article.cover.type"
+            />
+          </template>
         </el-form-item>
         <el-form-item label="频道" prop="channel_id">
           <el-select v-model="article.channel_id" placeholder="请选择频道">
@@ -50,6 +56,7 @@
 </template>
 
 <script>
+import UploadCover from './components/upload-cover'
 import { getArticleChannels, addArticle, getArticle, updateArticle } from '@/api/article'
 import {
   ElementTiptap,
@@ -79,7 +86,8 @@ import { uploadImage } from '@/api/image'
 export default {
   name: 'PublishIndex',
   components: {
-    'el-tiptap': ElementTiptap
+    'el-tiptap': ElementTiptap,
+    UploadCover
   },
   props: {},
   data () {
