@@ -43,7 +43,7 @@ export default {
       user: {
         mobile: '13911111111',
         code: '246810',
-        agree: false
+        agree: true
       },
       // checked: false,
       loginLoading: false,
