@@ -19,6 +19,11 @@
           <el-radio-button :label="false">全部</el-radio-button>
           <el-radio-button :label="true">收藏</el-radio-button>
         </el-radio-group>
+        <el-button
+          size="mini"
+          type="success"
+          @click="dialogUploadVisible = true"
+        >上传素材</el-button>
       </div>
       <!-- 素材列表 -->
       <el-row :gutter="10">
@@ -39,6 +44,13 @@
       </el-row>
       <!-- /素材列表 -->
     </el-card>
+    <el-dialog
+      title="上传素材"
+      :visible.sync="dialogUploadVisible"
+      :append-to-body="true"
+    >
+      hello world
+    </el-dialog>
   </div>
 </template>
 
@@ -52,7 +64,8 @@ export default {
   data () {
     return {
       collect: false,
-      images: []
+      images: [],
+      dialogUploadVisible: false
     }
   },
   computed: {},
@@ -76,4 +89,10 @@ export default {
 }
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.action-head {
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+</style>
