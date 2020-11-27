@@ -10,7 +10,7 @@
         <!-- /面包屑路径导航 -->
         <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
       </div>
-      <div style="padding-bottom: 20px;">
+      <div class="action-head">
         <el-radio-group
          v-model="collect"
          size="mini"
@@ -76,33 +76,33 @@
       >
       </el-pagination>
       <!-- /素材列表 -->
-    </el-card>
-    <el-dialog
-      title="上传素材"
-      :visible.sync="dialogUploadVisible"
-      :append-to-body="true"
-    >
-      <!--
-        upload 组件本身就支持请求提交上传操作，说白了你使用它不用自己去发请求，它会自己发。
-        请求方法：默认就是 POST
-        请求路径：action，必须写完整路径
-        请求头：headers
-       -->
-      <el-upload
-        class="upload-demo"
-        drag
-        action="http://ttapi.research.itcast.cn/mp/v1_0/user/images"
-        :headers="uploadHeaders"
-        name="image"
-        multiple
-        :show-file-list="false"
-        :on-success="onUploadSuccess"
+      <el-dialog
+        title="上传素材"
+        :visible.sync="dialogUploadVisible"
+        :append-to-body="true"
       >
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-        <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
-      </el-upload>
-    </el-dialog>
+        <!--
+          upload 组件本身就支持请求提交上传操作，说白了你使用它不用自己去发请求，它会自己发。
+          请求方法：默认就是 POST
+          请求路径：action，必须写完整路径
+          请求头：headers
+        -->
+        <el-upload
+          class="upload-demo"
+          drag
+          action="http://ttapi.research.itcast.cn/mp/v1_0/user/images"
+          :headers="uploadHeaders"
+          name="image"
+          multiple
+          :show-file-list="false"
+          :on-success="onUploadSuccess"
+        >
+          <i class="el-icon-upload"></i>
+          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+          <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+        </el-upload>
+      </el-dialog>
+    </el-card>
   </div>
 </template>
 
@@ -123,7 +123,7 @@ export default {
         Authorization: `Bearer ${user.token}`
       },
       totalCount: 0, // 总数据条数
-      pageSize: 20, // 每页大小
+      pageSize: 10, // 每页大小
       page: 1 // 当前页码
     }
   },
