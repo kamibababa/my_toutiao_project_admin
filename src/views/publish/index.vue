@@ -99,7 +99,7 @@ export default {
         content: '', // 文章内容
         channel_id: null,
         cover: { // 文章封面
-          type: 0, // 封面类型 -1:自动，0-无图，1-1张，3-3张
+          type: 1, // 封面类型 -1:自动，0-无图，1-1张，3-3张
           images: [] // 封面图片的地址
         }
       },
