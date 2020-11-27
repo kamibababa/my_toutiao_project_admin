@@ -10,6 +10,7 @@
         <el-radio-button :label="true">收藏</el-radio-button>
       </el-radio-group>
       <el-button
+        v-if="isShowAdd"
         size="mini"
         type="success"
         @click="dialogUploadVisible = true"
@@ -31,7 +32,7 @@
           :src="img.url"
           fit="cover"
         ></el-image>
-        <div class="image-action">
+        <div v-if="isShowAction" class="image-action">
           <el-button
             type="warning"
             :icon="img.is_collected ? 'el-icon-star-on' : 'el-icon-star-off'"
@@ -101,7 +102,16 @@ import { getImages, collectImage, deleteImage } from '@/api/image'
 export default {
   name: 'ImageList',
   components: {},
-  props: {},
+  props: {
+    isShowAdd: {
+      type: Boolean, // 布尔值
+      default: true // 默认值
+    },
+    isShowAction: {
+      type: Boolean,
+      default: true
+    }
+  },
   data () {
     const user = JSON.parse(window.localStorage.getItem('user'))
     return {
